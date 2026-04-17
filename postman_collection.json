@@ -1,0 +1,585 @@
+{
+  "info": {
+    "name": "GYMAPI Collection",
+    "description": "Colección de pruebas para la API del gimnasio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://localhost:5001",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login ADMIN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"fgarcia\", \"password\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "var jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"token\", jsonData.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login ENTRENADOR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"restrella\", \"password\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login SOCIO",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"mlopez\", \"password\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register Usuario (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"nuevo\", \"password\": \"password123\", \"email\": \"nuevo@example.com\", \"role\": \"SOCIO\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Perfil",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/perfil",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "perfil"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Socios",
+      "item": [
+        {
+          "name": "Get All Socios (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/socios",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios"]
+            }
+          }
+        },
+        {
+          "name": "Get Socio by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/socios/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Socio (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"fechaNacimiento\": \"1990-01-01\", \"telefono\": \"123456\", \"direccion\": \"Calle 123\", \"fechaIngreso\": \"2024-01-01\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/socios",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios"]
+            }
+          }
+        },
+        {
+          "name": "Update Socio (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"telefono\": \"654321\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/socios/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Asignar Membresia (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"membresiaId\": 1, \"fechaInicio\": \"2024-01-01\", \"fechaFin\": \"2024-12-31\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/socios/1/membresia",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios", "1", "membresia"]
+            }
+          }
+        },
+        {
+          "name": "Get Mi Plan (SOCIO)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/socios/1/rutinas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "socios", "1", "rutinas"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Entrenadores",
+      "item": [
+        {
+          "name": "Get All Entrenadores (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/entrenadores",
+              "host": ["{{base_url}}"],
+              "path": ["api", "entrenadores"]
+            }
+          }
+        },
+        {
+          "name": "Create Entrenador (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"especialidad\": \"Fuerza\", \"certificaciones\": \"Certificado\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/entrenadores",
+              "host": ["{{base_url}}"],
+              "path": ["api", "entrenadores"]
+            }
+          }
+        },
+        {
+          "name": "Get Socios Asignados (ENTRENADOR)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/entrenadores/1/socios",
+              "host": ["{{base_url}}"],
+              "path": ["api", "entrenadores", "1", "socios"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Membresías",
+      "item": [
+        {
+          "name": "Get All Membresias (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/membresias",
+              "host": ["{{base_url}}"],
+              "path": ["api", "membresias"]
+            }
+          }
+        },
+        {
+          "name": "Create Membresia (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": \"VIP\", \"descripcion\": \"Acceso total\", \"duracionDias\": 30, \"precio\": 150.00, \"esRenovable\": true}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/membresias",
+              "host": ["{{base_url}}"],
+              "path": ["api", "membresias"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Asistencias",
+      "item": [
+        {
+          "name": "Registrar Asistencia (ENTRENADOR)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"socioId\": 1}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/asistencias",
+              "host": ["{{base_url}}"],
+              "path": ["api", "asistencias"]
+            }
+          }
+        },
+        {
+          "name": "Get Historial Socio (ENTRENADOR)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/asistencias/socio/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "asistencias", "socio", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Mi Historial (SOCIO)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/asistencias/mi-historial",
+              "host": ["{{base_url}}"],
+              "path": ["api", "asistencias", "mi-historial"]
+            }
+          }
+        },
+        {
+          "name": "Update Asistencia (ENTRENADOR)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"fechaHoraSalida\": \"2024-04-01T10:00:00\", \"observaciones\": \"Buen entrenamiento\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/asistencias/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "asistencias", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Reporte (ADMIN)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/asistencias/reporte",
+              "host": ["{{base_url}}"],
+              "path": ["api", "asistencias", "reporte"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Planes de Entrenamiento",
+      "item": [
+        {
+          "name": "Get All Planes (ENTRENADOR)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/planes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "planes"]
+            }
+          }
+        },
+        {
+          "name": "Create Plan (ENTRENADOR)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"socioId\": 1, \"nombre\": \"Plan Básico\", \"objetivo\": \"Ganar fuerza\", \"fechaInicio\": \"2024-01-01\", \"activa\": true}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/planes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "planes"]
+            }
+          }
+        },
+        {
+          "name": "Get Mi Plan (SOCIO)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/planes/mi-plan",
+              "host": ["{{base_url}}"],
+              "path": ["api", "planes", "mi-plan"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
