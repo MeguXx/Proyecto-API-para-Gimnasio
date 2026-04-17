@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GYMAPI
 
 API RESTful para gestión de gimnasio desarrollada en .NET Core 8 con SQL Server.
@@ -119,16 +120,9 @@ Ejecuta los tests en orden: primero login, luego las operaciones protegidas.
 - Validación automática con FluentValidation.
 - Manejo centralizado de errores.
 
-Importar la colección incluida. Probar login y operaciones según roles.
+Importa la colección incluida. Prueba login y operaciones según roles.
 
 ## Diagrama ER
 
 Ver el esquema en el script SQL.
 
-## Pruebas con Postman
-
-Importar la colección de Postman incluida.
-
-## Diagrama ER
-
-Ver `diagrama-er.png`.
